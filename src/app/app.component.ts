@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'project';
+  displayRecipe: boolean;
+  displayShoppingList: boolean;
+
+  onEventDisplay(display) {
+    this.displayRecipe = display.recipeActive;
+    console.log(this.displayRecipe);
+    this.displayShoppingList = display.shoppingActive;
+    console.log(this.displayShoppingList);
+  }
 }
