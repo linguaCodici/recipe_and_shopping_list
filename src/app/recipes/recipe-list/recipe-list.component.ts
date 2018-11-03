@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -7,29 +8,12 @@ import { Recipe } from '../recipe.model';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
-  recipes: Recipe[] = [
-    // tslint:disable-next-line:max-line-length
-    new Recipe(
-      'Chicken',
-      'Test chicken',
-      'https://bit.ly/2ArHSZd'),
-    // tslint:disable-next-line:max-line-length
-    new Recipe(
-      'Beef',
-      'Test beef',
-      'https://bit.ly/2OSDaNa')
-  ];
+  recipes: Recipe[];
 
-  @Output() showDetail = new EventEmitter<Recipe>();
-
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
-  }
-
-  onShowDetail(recipe: Recipe) {
-    this.showDetail.emit(recipe);
-    console.log('show from shopping list');
+    this.recipes = this.recipeService.getRecipes();
   }
 
 }

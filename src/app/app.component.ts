@@ -12,8 +12,6 @@ export class AppComponent {
 
   onEventDisplay(display) {
     this.displayRecipe = display.recipeActive;
-    console.log(this.displayRecipe);
     this.displayShoppingList = display.shoppingActive;
-    console.log(this.displayShoppingList);
   }
 }
