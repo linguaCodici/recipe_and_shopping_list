@@ -1,9 +1,9 @@
 import { Recipe } from './recipe.model';
-import { EventEmitter } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
+import { Subject } from 'rxjs';
 
 export class RecipeService {
-  recipeSelected = new EventEmitter<Recipe>();
+  recipesChanged = new Subject<Recipe[]>();
 
   private recipes: Recipe[] = [
     // tslint:disable-next-line:max-line-length
@@ -12,7 +12,9 @@ export class RecipeService {
       'Test chicken',
       'https://bit.ly/2ArHSZd',
       [
-        new Ingredient('chicken', 1)
+        new Ingredient('chicken', 3),
+        new Ingredient('broccoli', 1),
+        new Ingredient('carrot', 6)
       ]),
     // tslint:disable-next-line:max-line-length
     new Recipe(
@@ -20,7 +22,8 @@ export class RecipeService {
       'Test beef',
       'https://bit.ly/2OSDaNa',
       [
-        new Ingredient('Beef', 1)
+        new Ingredient('Beef', 1),
+        new Ingredient('Wine', 1)
       ])
   ];
 
@@ -30,6 +33,21 @@ export class RecipeService {
 
   getRecipe(id: number) {
     return this.recipes.slice()[id];
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.getRecipes());
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipesChanged.next(this.getRecipes());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.getRecipes());
   }
 
 }
