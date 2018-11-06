@@ -29,6 +29,8 @@ export class RecipeDetailComponent implements OnInit {
 
   onToShoppingList() {
     this.slService.addIngredients(this.recipe.ingredients);
+    confirm('Ingredients have been added to your shopping list!');
+    this.router.navigate(['/shopping-list']);
   }
 
   onDeleteRecipe() {
