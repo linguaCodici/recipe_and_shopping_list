@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { RecipeService } from '../recipes/recipe.service';
-import { DataService } from '../shared/data.service';
-import { Recipe } from '../recipes/recipe.model';
+import { Component } from '@angular/core';
+import { RecipeService } from '../../recipes/recipe.service';
+import { DataService } from '../../shared/data.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component ({
   selector: 'app-header',
@@ -9,8 +9,11 @@ import { Recipe } from '../recipes/recipe.model';
 })
 
 export class HeaderComponent {
+  authenticated: boolean;
+
   constructor(private recipesService: RecipeService,
-    private dataService: DataService) {}
+    private dataService: DataService,
+    private authService: AuthService) {}
 
   onSaveData() {
     this.dataService.saveData(this.recipesService.getRecipes())
@@ -29,4 +32,13 @@ export class HeaderComponent {
         }
       );
   }
-}
+
+  onLogout() {
+    this.authService.logout();
+    location.reload();
+  }
+
+  isAuthenticated() {
+    return this.authService.isAuthenticated();
+  }
+ }

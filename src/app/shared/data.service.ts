@@ -2,19 +2,25 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Recipe } from '../recipes/recipe.model';
 import { map} from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class DataService {
   baseUri = 'https://recipe-book-66dce.firebaseio.com/recipes.json';
 
-  constructor(private http: Http) {}
+  constructor(private http: Http,
+    private authService: AuthService) {}
 
   saveData(recipes: Recipe[]) {
-    return this.http.put(this.baseUri, recipes);
+    const token = this.authService.getToken();
+
+    return this.http.put(this.baseUri + '?auth=' + token, recipes);
   }
 
   fetchData() {
-    return this.http.get(this.baseUri)
+    const token = this.authService.getToken();
+
+    return this.http.get(this.baseUri + '?auth=' + token)
       .pipe(
         map((data) => {
           const recipes = data.json();
