@@ -1,6 +1,6 @@
 # Project
 
-This project was generated with Angular 7.0.1 and data stored in Firebase.
+This project was generated with Angular 7.0.1, data stored in Firebase, and deployed on AWS.
 
 # Recipe and Shopping List Service
 
