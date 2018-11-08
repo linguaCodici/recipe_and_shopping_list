@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+  message = '';
 
   constructor(private authService: AuthService,
     private router: Router,
@@ -20,7 +21,16 @@ export class SignupComponent implements OnInit {
   onSignup(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    this.authService.signupUser(email, password);
-    this.router.navigate(['../signup'], {relativeTo: this.route});
+    this.authService.signupUser(email, password)
+      .then(
+        success => {
+          this.message = '';
+          confirm('Sign up successfully!');
+          this.router.navigate(['../signin'], { relativeTo: this.route });
+        }
+      )
+      .catch(
+        error => this.message = error.message
+      );
   }
 }
